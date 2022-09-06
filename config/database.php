@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => 'sqlite',
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -36,7 +36,7 @@ return [
     'connections' => [
 
         'sqlite' => [
-            'driver' => 'pdo_sqlite',
+            'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
@@ -147,5 +147,4 @@ return [
         ],
 
     ],
-
 ];
