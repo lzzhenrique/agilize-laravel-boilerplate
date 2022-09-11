@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SubjectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/subject', [SubjectController::class, 'index']);
+Route::post('/subject/create', [SubjectController::class, 'store']);
+Route::delete('/subject/remove', [SubjectController::class, 'remove']);
