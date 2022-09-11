@@ -2,12 +2,13 @@
 
 namespace App\Repositorys;
 
+
 use App\Models\Student;
-use App\Repositorys\Interfaces\ISubject;
+use App\Repositorys\Interfaces\IStudent;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Http\Request;
 
-class SubjectRepository implements ISubject
+class StudentRepository implements IStudent
 {
     private EntityManager $entityManager;
 
@@ -18,16 +19,16 @@ class SubjectRepository implements ISubject
 
     public function create(Request $request)
     {
-        $subject = $this->prepareData($request);
+        $student = $this->prepareData($request);
 
-        $this->entityManager->persist($subject);
+        $this->entityManager->persist($student);
         $this->entityManager->flush();
     }
 
-    public function remove(Student $subject)
+    public function remove(Student $student)
     {
         try {
-            $this->entityManager->remove($subject);
+            $this->entityManager->remove($student);
 
             $this->entityManager->flush();
 
