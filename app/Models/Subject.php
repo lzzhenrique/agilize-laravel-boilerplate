@@ -2,16 +2,21 @@
 
 namespace App\Models;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
 
 #[Entity]
 #[Table(name:"subjects")]
 class Subject
 {
+    #[OneToMany(mappedBy: "subject", targetEntity: Question::class)]
+    protected Collection $question;
+
     #[Id, Column(type:"guid"), GeneratedValue(strategy: 'UUID')]
     protected string $id;
 
@@ -20,10 +25,10 @@ class Subject
 
     public function __construct($input)
     {
-        $this->setName($input['name']);
+        $this->setName($input['subject']);
     }
 
-    protected function getSubject(): int
+    public function getSubject(): int
     {
         return $this->id;
     }
