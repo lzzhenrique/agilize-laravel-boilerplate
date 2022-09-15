@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subject;
 use App\Repositorys\SubjectRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class SubjectController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $this->subjects->create($request);
+        $this->subjects->create(new Subject($request));
 
         return response()->json(['message' => 'Subject ' . $request->get('name') . ' created successfully']);
     }

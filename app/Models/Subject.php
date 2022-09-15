@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
+use Illuminate\Http\Request;
 
 #[Entity]
 #[Table(name:"subjects")]
@@ -23,9 +24,9 @@ class Subject
     #[Column(type:"string", unique:true)]
     protected string $name;
 
-    public function __construct($input)
+    public function __construct(Request $request)
     {
-        $this->setName($input['subject']);
+        $this->setName($request->get('name'));
     }
 
     public function getSubject(): int

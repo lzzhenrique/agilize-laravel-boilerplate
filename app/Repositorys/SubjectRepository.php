@@ -3,6 +3,7 @@
 namespace App\Repositorys;
 
 use App\Models\Student;
+use App\Models\Subject;
 use App\Repositorys\Interfaces\ISubject;
 use Doctrine\ORM\EntityManager;
 use Illuminate\Http\Request;
@@ -16,15 +17,13 @@ class SubjectRepository implements ISubject
         $this->entityManager = $entityManager;
     }
 
-    public function create(Request $request)
+    public function create(Subject $subject)
     {
-        $subject = $this->prepareData($request);
-
         $this->entityManager->persist($subject);
         $this->entityManager->flush();
     }
 
-    public function remove(Student $subject)
+    public function remove(Subject $subject)
     {
         try {
             $this->entityManager->remove($subject);
@@ -43,15 +42,10 @@ class SubjectRepository implements ISubject
             ->findAll();
     }
 
-    private function prepareData(Request $request)
-    {
-        return new Student($request);
-    }
-
     public function getById(string $id)
     {
-        return $this->entityManager->getRepository(
-            Student::class)
+        return $this->entityManager
+            ->getRepository(Student::class)
             ->findOneBy(['id' => $id]);
     }
 }
