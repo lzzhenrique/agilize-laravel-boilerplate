@@ -27,11 +27,11 @@ return [
     'managers'                   => [
         'default' => [
             'dev'           => env('APP_DEBUG', false),
-            'meta'          => env('DOCTRINE_METADATA', 'annotations'),
+            'meta'          => env('DOCTRINE_METADATA', 'attributes'),
             'connection'    => env('DB_CONNECTION', 'mysql'),
             'namespaces'    => [],
             'paths'         => [
-                base_path('app/Packages')
+                base_path('app/Models')
             ],
             'repository'    => Doctrine\ORM\EntityRepository::class,
             'proxies'       => [
