@@ -17,7 +17,7 @@ class ExamQuestion
     #[Id, Column(type:"guid"), GeneratedValue(strategy: 'UUID')]
     protected string $id;
 
-    #[Column(type:"string ")]
+    #[Column(type:"string")]
     protected string $question;
 
     #[ManyToOne(targetEntity: Exam::class, inversedBy: "exam")]
