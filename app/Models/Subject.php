@@ -9,13 +9,12 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
-use Illuminate\Http\Request;
 
 #[Entity]
 #[Table(name:"subjects")]
 class Subject
 {
-    #[OneToMany(mappedBy: "subject", targetEntity: Question::class)]
+    #[OneToMany(mappedBy: "subject", targetEntity: Question::class, cascade: ["persist"])]
     protected Collection $question;
 
     #[Id, Column(type:"guid"), GeneratedValue(strategy: 'UUID')]
@@ -24,12 +23,12 @@ class Subject
     #[Column(type:"string", unique:true)]
     protected string $name;
 
-    public function __construct(Request $request)
+    public function __construct(string $subject)
     {
-        $this->setName($request->get('name'));
+        $this->setName($subject);
     }
 
-    public function getSubject(): int
+    public function getSubject(): string
     {
         return $this->id;
     }

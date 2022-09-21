@@ -4,11 +4,9 @@ namespace App\Repositorys;
 
 
 use App\Models\Student;
-use App\Repositorys\Interfaces\IStudent;
 use Doctrine\ORM\EntityManager;
-use Illuminate\Http\Request;
 
-class StudentRepository implements IStudent
+class StudentRepository
 {
     private EntityManager $entityManager;
 
@@ -17,42 +15,16 @@ class StudentRepository implements IStudent
         $this->entityManager = $entityManager;
     }
 
-    public function create(Request $request)
+    public function create(Student $student): Student
     {
-        $student = $this->prepareData($request);
-
         $this->entityManager->persist($student);
         $this->entityManager->flush();
+
+        return $student;
     }
 
-    public function remove(Student $student)
+    public function getById($id): Student
     {
-        try {
-            $this->entityManager->remove($student);
-
-            $this->entityManager->flush();
-
-        }catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
-    }
-
-    public function getAll() : array
-    {
-        return $this->entityManager->getRepository(
-            Student::class )
-            ->findAll();
-    }
-
-    private function prepareData(Request $request)
-    {
-        return new Student($request);
-    }
-
-    public function getById(string $id)
-    {
-        return $this->entityManager->getRepository(
-            Student::class)
-            ->findOneBy(['id' => $id]);
+        return $this->entityManager->find(Student::class, $id);
     }
 }

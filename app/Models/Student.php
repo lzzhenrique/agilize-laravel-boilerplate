@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
+use http\Env\Request;
 
 #[Entity]
 #[Table(name:"students")]
@@ -18,9 +19,9 @@ class Student
     #[Column(type:"string")]
     protected string $name;
 
-    public function __construct($input)
+    public function __construct($name)
     {
-        $this->setName($input['name']);
+        $this->setName($name);
     }
 
     protected function getStudent(): int
@@ -28,7 +29,7 @@ class Student
         return $this->id;
     }
 
-    protected  function getStudentName(): string
+    public  function getStudentName(): string
     {
         return $this->name;
     }

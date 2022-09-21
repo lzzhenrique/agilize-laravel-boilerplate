@@ -3,7 +3,6 @@
 namespace App\Models;
 
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -18,16 +17,16 @@ class Question
     #[Id, Column(type:"guid"), GeneratedValue(strategy: 'UUID')]
     protected string $id;
 
+    #[ManyToOne(targetEntity: Subject::class, cascade: ["persist"], inversedBy: "question")]
+    protected Subject $subject;
+
     #[Column(type:"string")]
     protected string $question;
 
-    #[ManyToOne(targetEntity: Subject::class, inversedBy: "question")]
-    protected Subject $subject;
-
-    public function __construct($input)
+    public function __construct(string $question, Subject $subject)
     {
-        $this->setQuestion($input['question']);
-        $this->setSubjectId($input['subject']);
+        $this->question = $question;
+        $this->subject = $subject;
     }
 
     public function getId(): string
@@ -40,18 +39,8 @@ class Question
         return $this->question;
     }
 
-    public function setQuestion(string $question): void
+    public function getSubject(): string
     {
-        $this->question = $question;
-    }
-
-    public function getSubjectId(): string
-    {
-        return $this->subject_id;
-    }
-
-    public function setSubjectId(string $subject_id): void
-    {
-        $this->subject_id = $subject_id;
+        return $this->subject;
     }
 }
