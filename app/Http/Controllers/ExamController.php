@@ -14,24 +14,16 @@ use Illuminate\Http\JsonResponse;
 class ExamController
 {
     protected ExamService $examService;
-    protected ExamQuestionsService $examQuestionsService;
-    protected ExamAnswersService $examAnswersService;
 
-    public function __construct(
-        ExamService $examService,
-        ExamQuestionsService $examQuestionsService,
-        ExamAnswersService $examAnswersService
-    )
+    public function __construct(ExamService $examService)
     {
         $this->examService = $examService;
-        $this->examQuestionsService = $examQuestionsService;
-        $this->examAnswersService = $examAnswersService;
     }
 
     public function store(Request $request): JsonResponse
     {
         try{
-           $exam = $this->createExam(
+           $exam = $this->examService->create(
                $request->get('student_id'),
                $request->get('subject_id'),
                $request->get('question_quantity')
@@ -41,28 +33,9 @@ class ExamController
                 'message' => 'The exam ' .  $exam->getId() . ' are created successfully'
             ]);
 
+
         }catch (\Exception $e){
             ErrorHandler::handleException($e);
         }
-    }
-
-    private function createExam($studentId, $subjectId, $questionQuantity): Exam
-    {
-        $exam = $this->examService->create($studentId, $subjectId, $questionQuantity);
-
-        $this->createExamQuestions($exam);
-        $this->createExamAnswers($exam);
-
-        return $exam;
-    }
-
-    private function createExamQuestions(Exam $exam): void
-    {
-        $this->examQuestionsService->create($exam);
-    }
-
-    private function createExamAnswers($exam)
-    {
-        $this->examAnswersService->create($exam);
     }
 }

@@ -18,6 +18,6 @@ class ExamAnswersRepository
     public function create(ExamAnswer $examAnswer)
     {
         $this->entityManager->persist($examAnswer);
-        dd($this->entityManager->flush());
+        $this->entityManager->flush();
     }
 }

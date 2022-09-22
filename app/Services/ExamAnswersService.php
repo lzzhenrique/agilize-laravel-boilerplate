@@ -3,7 +3,6 @@
 namespace App\Services;
 
 
-use App\Models\Exam;
 use App\Models\ExamAnswer;
 use App\Repositorys\AnswerRepository;
 use App\Repositorys\ExamAnswersRepository;
@@ -26,11 +25,8 @@ class ExamAnswersService
         $this->examQuestionsRepository = $examQuestionsRepository;
     }
 
-    public function create(Exam $exam)
+    public function create($examQuestions)
     {
-        $examQuestions = $this->examQuestionsRepository->findQuestionsByExam($exam);
-
-
         foreach ($examQuestions as $examQuestion) {
             $correctAnswer = $this->answerRepository->getCorrectAnswer($examQuestion);
 

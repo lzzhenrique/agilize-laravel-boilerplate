@@ -18,7 +18,6 @@ class ExamRepository
     public function create(Exam $exam): Exam
     {
         $this->entityManager->persist($exam);
-//        $this->entityManager->flush();
 
         return $exam;
     }

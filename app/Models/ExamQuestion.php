@@ -17,16 +17,25 @@ class ExamQuestion
 {
     public function __construct(Question $question, Exam $exam)
     {
-        $this->question = $question;
+        $this->question = $question->getQuestion();
         $this->exam = $exam;
     }
 
     #[Id, Column(type:"guid"), GeneratedValue(strategy: 'UUID')]
     protected string $id;
 
-    #[OneToOne(targetEntity: Question::class, cascade: ["persist"])]
-    protected Question $question;
+    protected string $question;
 
     #[ManyToOne(targetEntity: Exam::class, cascade: ["persist"], inversedBy: "exam")]
     protected Exam  $exam;
+
+    public function getId()
+    {
+        return $this->id;
+    }
+    public function getQuestionId()
+    {
+        return $this->question;
+    }
+
 }

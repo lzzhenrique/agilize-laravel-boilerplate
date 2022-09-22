@@ -31,7 +31,7 @@ class AnswerRepository
             ->from(Answer::class, 'answer')
             ->where('answer.is_correct = true')
             ->andWhere('answer.question = :questionId')
-            ->setParameter('questionId', $question->getId())
+            ->setParameter('questionId', $question->getQuestion())
             ->getQuery()
             ->getOneOrNullResult();
     }

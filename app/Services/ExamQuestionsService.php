@@ -23,11 +23,17 @@ class ExamQuestionsService
 
     public function create(Exam $exam)
     {
-        $examQuestions = $this->pickExamQuestions($exam);
+        $questions = $this->pickExamQuestions($exam);
+        $examQuestions = [];
 
-        foreach ($examQuestions as $examQuestion) {
-            $this->examQuestionsRepository->create(new ExamQuestion($examQuestion, $exam));
+        foreach ($questions as $examQuestion) {
+            $examQuestion = new ExamQuestion($examQuestion, $exam);
+
+            $this->examQuestionsRepository->create($examQuestion);
+            $examQuestions[] = $examQuestion;
         }
+
+        return $examQuestions;
     }
 
     private function pickExamQuestions(Exam $exam)

@@ -33,13 +33,13 @@ class Exam
     #[ManyToOne(targetEntity: Student::class, cascade: ["persist"], inversedBy: "student")]
     protected Student  $student;
 
-    #[Column(type:"integer")]
+    #[Column(type:"integer", nullable: true)]
     protected int $score;
 
     #[Column(type:"integer")]
     protected int $question_quantity;
 
-    #[Column(type:"datetime")]
+    #[Column(type:"datetime", nullable: true)]
     protected string $finished_at;
 
     public function getId(): string
