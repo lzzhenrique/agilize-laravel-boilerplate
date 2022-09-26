@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Errors\ErrorHandler;
-use App\Models\Exam;
-use App\Services\ExamAnswersService;
-use App\Services\ExamQuestionsService;
 use App\Services\ExamService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;

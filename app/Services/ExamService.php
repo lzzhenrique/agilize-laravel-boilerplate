@@ -16,27 +16,24 @@ class ExamService
     protected StudentRepository $studentRepository;
     protected QuestionRepository $questionRepository;
 
-    protected ExamQuestionsService $examQuestionsService;
-    protected ExamAnswersService $examAnswersService;
+    protected ExamQuestionAnswerService $examQuestionAnswerService;
 
     public function __construct(
         SubjectRepository $subjectRepository,
         ExamRepository $examRepository,
         StudentRepository $studentRepository,
         QuestionRepository $questionRepository,
-        ExamQuestionsService $examQuestionsService,
-        ExamAnswersService $examAnswersService
+        ExamQuestionAnswerService $examQuestionAnswerService
     )
     {
         $this->subjectRepository = $subjectRepository;
         $this->examRepository = $examRepository;
         $this->studentRepository = $studentRepository;
         $this->questionRepository = $questionRepository;
-        $this->examQuestionsService = $examQuestionsService;
-        $this->examAnswersService = $examAnswersService;
+        $this->examQuestionAnswerService = $examQuestionAnswerService;
     }
 
-    public function create($studentId, $subjectId, $questionQuantity)
+    public function create($studentId, $subjectId, $questionQuantity): Exam
     {
         $this->validateExamRequest(
             [
@@ -47,11 +44,7 @@ class ExamService
         );
 
         $exam = $this->createExam($studentId, $subjectId, $questionQuantity);
-
-        $examQuestions = $this->createExamQuestions($exam);
-        $this->createExamAnswers($examQuestions);
-
-        return $exam;
+        $this->createExamQuestionAnswer($exam);
     }
 
     private function validateExamRequest($request)
@@ -78,13 +71,8 @@ class ExamService
         );
     }
 
-    private function createExamQuestions(Exam $exam)
+    private function createExamQuestionAnswer(Exam $exam)
     {
-        return $this->examQuestionsService->create($exam);
-    }
-
-    private function createExamAnswers($examQuestions)
-    {
-        $this->examAnswersService->create($examQuestions);
+        $this->examQuestionAnswerService->create($exam);
     }
 }

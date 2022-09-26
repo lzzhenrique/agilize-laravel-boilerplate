@@ -25,7 +25,7 @@ class Answer
     #[ManyToOne(targetEntity: Question::class, cascade: ["persist"], inversedBy: "answer")]
     protected Question  $question;
 
-    public function __construct($answer, bool $is_correct, Question $question,)
+    public function __construct($answer, bool $is_correct, Question $question)
     {
         $this->answer = $answer;
         $this->is_correct = $is_correct;

@@ -24,15 +24,14 @@ class AnswerRepository
         return $answer;
     }
 
-    public function getCorrectAnswer(Question $question) {
+    public function getAnswersByQuestion($questionId) {
         $queryBuilder  = $this->entityManager->createQueryBuilder();
 
         return $queryBuilder->select('answer')
             ->from(Answer::class, 'answer')
-            ->where('answer.is_correct = true')
-            ->andWhere('answer.question = :questionId')
-            ->setParameter('questionId', $question->getQuestion())
+            ->where('answer.question = :questionId')
+            ->setParameter('questionId', $questionId)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 }
