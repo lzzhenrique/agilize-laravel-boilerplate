@@ -17,20 +17,19 @@ class Answer
     protected string $id;
 
     #[Column(type:"string")]
-    protected string $answer;
+    public string $answer;
 
     #[Column(type:"boolean")]
-    protected string $is_correct;
+    protected bool $is_correct;
 
-    #[ManyToOne(targetEntity: Question::class, inversedBy: "answer")]
+    #[ManyToOne(targetEntity: Question::class, cascade: ["persist"], inversedBy: "answers")]
     protected Question  $question;
 
-
-    public function __construct($input)
+    public function __construct($answer, bool $is_correct, Question $question)
     {
-        $this->setAnswer($input['answer']);
-        $this->setIsCorrect($input['is_correct']);
-        $this->setQuestionId($input['question_id']);
+        $this->answer = $answer;
+        $this->is_correct = $is_correct;
+        $this->question = $question;
     }
 
     public function getId(): string
@@ -43,29 +42,13 @@ class Answer
         return $this->answer;
     }
 
-    public function setAnswer(string $answer): void
-    {
-        $this->answer = $answer;
-    }
-
     public function getIsCorrect(): string
     {
         return $this->is_correct;
-    }
-
-    public function setIsCorrect(string $is_correct): void
-    {
-        $this->is_correct = $is_correct;
     }
 
     public function getQuestionId(): string
     {
         return $this->question_id;
     }
-
-    public function setQuestionId(string $question_id): void
-    {
-        $this->question_id = $question_id;
-    }
-
 }

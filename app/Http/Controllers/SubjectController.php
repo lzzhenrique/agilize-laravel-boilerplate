@@ -2,42 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Errors\ErrorHandler;
+use App\Models\Subject;
 use App\Repositorys\SubjectRepository;
+use App\Services\SubjectService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 
 class SubjectController extends Controller
 {
-    protected SubjectRepository $subjects;
+    protected SubjectService $subjectService;
 
-    public function __construct(SubjectRepository $subjects)
+    public function __construct(SubjectService $subjectService)
     {
-        $this->subjects = $subjects;
+        $this->subjectService = $subjectService;
     }
 
     public function store(Request $request): JsonResponse
     {
-        $this->subjects->create($request);
+        try {
+            $subject = $this->subjectService
+                ->create(
+                    $request->get('subject')
+                );
 
-        return response()->json(['message' => 'Subject ' . $request->get('name') . ' created successfully']);
-    }
-
-    public function remove(Request $request): JsonResponse
-    {
-        $subjectToDelete = $this->subjects->getById($request->get('id'));
-
-        $this->subjects->remove($subjectToDelete);
-
-        return response()->json(['message' => 'Subject ' . $request->get('name') . ' deleted successfully']);
-    }
-
-
-    public function index()
-    {
-        $subjects = $this->subjects->getAll();
-
-        return response()->json($subjects);
+            return response()->json([
+                'message' => 'The subject ' .  $subject->getSubject() . ' are created successfully'
+            ]);
+        } catch (\Exception $e) {
+            ErrorHandler::handleException($e);
+        }
     }
 }

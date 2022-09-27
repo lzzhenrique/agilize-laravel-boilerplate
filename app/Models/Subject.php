@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping\Table;
 #[Table(name:"subjects")]
 class Subject
 {
-    #[OneToMany(mappedBy: "subject", targetEntity: Question::class)]
+    #[OneToMany(mappedBy: "subject", targetEntity: Question::class, cascade: ["persist"])]
     protected Collection $question;
 
     #[Id, Column(type:"guid"), GeneratedValue(strategy: 'UUID')]
@@ -23,17 +23,17 @@ class Subject
     #[Column(type:"string", unique:true)]
     protected string $name;
 
-    public function __construct($input)
+    public function __construct(string $subject)
     {
-        $this->setName($input['subject']);
+        $this->setName($subject);
     }
 
-    public function getSubject(): int
+    public function getSubject(): string
     {
         return $this->id;
     }
 
-    protected  function getSubjectName(): string
+    public  function getSubjectName(): string
     {
         return $this->name;
     }

@@ -3,41 +3,34 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Errors\ErrorHandler;
+use App\Repositorys\QuestionRepository;
 use App\Repositorys\StudentRepository;
-use App\Repositorys\SubjectRepository;
+use App\Services\StudentService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class StudentController
+class StudentController extends Controller
 {
-    protected StudentRepository $student;
+    protected StudentService $studentService;
 
-    public function __construct(StudentRepository $student)
+    public function __construct(StudentService $studentService)
     {
-        $this->student = $student;
+        $this->studentService = $studentService;
     }
 
     public function store(Request $request): JsonResponse
     {
-        $this->student->create($request);
+        try {
+            $student = $this->studentService
+                ->create($request->get('name')
+           );
 
-        return response()->json(['message' => 'The student ' . $request->get('name') . ' are created successfully']);
-    }
-
-    public function remove(Request $request): JsonResponse
-    {
-        $studentToDelete = $this->student->getById($request->get('id'));
-
-        $this->student->remove($studentToDelete);
-
-        return response()->json(['message' => 'The student ' . $request->get('name') . ' are deleted successfully']);
-    }
-
-
-    public function index()
-    {
-        $student = $this->student->getAll();
-
-        return response()->json($student);
+            return response()->json([
+                'message' => 'The student ' . $student->getStudentName() . ' are created successfully'
+            ]);
+        } catch (\Exception $e) {
+           ErrorHandler::handleException($e);
+        }
     }
 }

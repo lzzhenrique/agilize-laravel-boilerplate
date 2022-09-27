@@ -3,12 +3,14 @@
 namespace App\Models;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
 
 #[Entity]
@@ -18,16 +20,20 @@ class Question
     #[Id, Column(type:"guid"), GeneratedValue(strategy: 'UUID')]
     protected string $id;
 
+    #[ManyToOne(targetEntity: Subject::class, cascade: ["persist"], inversedBy: "question")]
+    protected Subject $subject;
+
+    #[OneToMany(mappedBy: "question", targetEntity: Answer::class, cascade: ["persist"], orphanRemoval: true)]
+    protected Collection $answers;
+
     #[Column(type:"string")]
     protected string $question;
 
-    #[ManyToOne(targetEntity: Subject::class, inversedBy: "question")]
-    protected Subject $subject;
-
-    public function __construct($input)
+    public function __construct(string $question, Subject $subject)
     {
-        $this->setQuestion($input['question']);
-        $this->setSubjectId($input['subject']);
+        $this->question = $question;
+        $this->subject = $subject;
+        $this->answers = new ArrayCollection();
     }
 
     public function getId(): string
@@ -40,18 +46,13 @@ class Question
         return $this->question;
     }
 
-    public function setQuestion(string $question): void
+    public function getSubject(): string
     {
-        $this->question = $question;
+        return $this->subject;
     }
 
-    public function getSubjectId(): string
+    public function getAnswers()
     {
-        return $this->subject_id;
-    }
-
-    public function setSubjectId(string $subject_id): void
-    {
-        $this->subject_id = $subject_id;
+        return $this->answers;
     }
 }
