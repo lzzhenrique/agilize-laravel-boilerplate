@@ -22,7 +22,7 @@ COPY .docker/etc /etc
 
 RUN chmod -v +x /usr/sbin/entrypoint.local; \
     chmod -v +x /usr/sbin/update-application; \
-    mkdir /var/www/storage/proxies; \
+#    mkdir /var/www/storage/proxies; \
     chmod 777 /var/www/bootstrap -Rf; \
     chmod 777 /var/www/storage -Rf; \
     chown apache.apache /var/www -Rf;

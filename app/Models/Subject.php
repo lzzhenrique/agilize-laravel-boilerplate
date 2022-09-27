@@ -33,7 +33,7 @@ class Subject
         return $this->id;
     }
 
-    protected  function getSubjectName(): string
+    public  function getSubjectName(): string
     {
         return $this->name;
     }

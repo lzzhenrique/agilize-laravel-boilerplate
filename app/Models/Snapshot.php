@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\Table;
 
 #[Entity]
 #[Table(name:"exam_question_answer")]
-class ExamQuestionAnswer
+class Snapshot
 {
     public function __construct(
         Exam $exam,
@@ -38,7 +38,7 @@ class ExamQuestionAnswer
     private string $answer;
 
     #[Column(type:"boolean")]
-    private string $isCorrect;
+    private bool $isCorrect;
 
     #[Column(type:"string", nullable: true)]
     protected string $student_answer;

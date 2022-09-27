@@ -26,9 +26,7 @@ class ExamController
                $request->get('question_quantity')
            );
 
-            return response()->json([
-                'message' => 'The exam ' .  $exam->getId() . ' are created successfully'
-            ]);
+            return response()->json($exam);
 
 
         }catch (\Exception $e){

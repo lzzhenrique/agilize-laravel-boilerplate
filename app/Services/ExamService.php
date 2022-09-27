@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 use App\Models\Exam;
+use App\Models\Question;
 use App\Repositorys\ExamRepository;
 use App\Repositorys\QuestionRepository;
 use App\Repositorys\StudentRepository;
@@ -16,24 +17,24 @@ class ExamService
     protected StudentRepository $studentRepository;
     protected QuestionRepository $questionRepository;
 
-    protected ExamQuestionAnswerService $examQuestionAnswerService;
+    protected SnapshotService $snapshotService;
 
     public function __construct(
         SubjectRepository $subjectRepository,
         ExamRepository $examRepository,
         StudentRepository $studentRepository,
         QuestionRepository $questionRepository,
-        ExamQuestionAnswerService $examQuestionAnswerService
+        SnapshotService $snapshotService
     )
     {
         $this->subjectRepository = $subjectRepository;
         $this->examRepository = $examRepository;
         $this->studentRepository = $studentRepository;
         $this->questionRepository = $questionRepository;
-        $this->examQuestionAnswerService = $examQuestionAnswerService;
+        $this->snapshotService = $snapshotService;
     }
 
-    public function create($studentId, $subjectId, $questionQuantity): Exam
+    public function create($studentId, $subjectId, $questionQuantity)
     {
         $this->validateExamRequest(
             [
@@ -44,7 +45,9 @@ class ExamService
         );
 
         $exam = $this->createExam($studentId, $subjectId, $questionQuantity);
-        $this->createExamQuestionAnswer($exam);
+        $snapshot = $this->createExamSnapshot($exam);
+
+        return $this->createResponse($exam, $snapshot);
     }
 
     private function validateExamRequest($request)
@@ -71,8 +74,19 @@ class ExamService
         );
     }
 
-    private function createExamQuestionAnswer(Exam $exam)
+    private function createExamSnapshot(Exam $exam)
     {
-        $this->examQuestionAnswerService->create($exam);
+        return $this->snapshotService->create($exam);
+    }
+
+    private function createResponse(Exam $exam, $snapshot)
+    {
+        return [
+            'exam' => $exam->getId(),
+            'student' => $exam->getStudent()->getStudentName(),
+            'subject' => $exam->getSubject()->getSubjectName(),
+            'questionsAndAnswers' => $snapshot,
+            'startedAt' => $exam->getCreatedAt()->format('Y-m-d H:i:s')
+        ];
     }
 }

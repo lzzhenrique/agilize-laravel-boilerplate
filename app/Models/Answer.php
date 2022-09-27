@@ -22,7 +22,7 @@ class Answer
     #[Column(type:"boolean")]
     protected bool $is_correct;
 
-    #[ManyToOne(targetEntity: Question::class, cascade: ["persist"], inversedBy: "answer")]
+    #[ManyToOne(targetEntity: Question::class, cascade: ["persist"], inversedBy: "answers")]
     protected Question  $question;
 
     public function __construct($answer, bool $is_correct, Question $question)

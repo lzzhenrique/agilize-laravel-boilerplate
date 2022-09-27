@@ -42,6 +42,9 @@ class Exam
     #[Column(type:"datetime", nullable: true)]
     protected string $finished_at;
 
+    #[OneToMany(mappedBy: "question", targetEntity: Answer::class, cascade: ["persist"], orphanRemoval: true)]
+    protected Collection $questions;
+
     public function getId(): string
     {
         return $this->id;
