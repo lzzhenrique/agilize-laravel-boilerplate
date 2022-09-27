@@ -22,7 +22,7 @@ class ExamRepository
         return $exam;
     }
 
-    public function getById(string $id)
+    public function getById(string $id): Exam
     {
         return $this->entityManager->find(
             Exam::class,
