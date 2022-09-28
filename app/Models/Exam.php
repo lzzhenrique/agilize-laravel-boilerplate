@@ -33,7 +33,7 @@ class Exam
     #[ManyToOne(targetEntity: Student::class, cascade: ["persist"], inversedBy: "student")]
     protected Student  $student;
 
-    #[Column(type:"integer", nullable: true)]
+    #[Column(type:"float", nullable: true)]
     protected int $score;
 
     #[Column(type:"integer")]
