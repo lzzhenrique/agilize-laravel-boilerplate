@@ -5,8 +5,10 @@ namespace App\Services;
 
 use App\Models\Exam;
 use App\Models\Question;
+use App\Models\Snapshot;
 use App\Repositorys\ExamRepository;
 use App\Repositorys\QuestionRepository;
+use App\Repositorys\SnapshotRepository;
 use App\Repositorys\StudentRepository;
 use App\Repositorys\SubjectRepository;
 use Carbon\Carbon;
@@ -17,15 +19,19 @@ class ExamService
     protected ExamRepository $examRepository;
     protected StudentRepository $studentRepository;
     protected QuestionRepository $questionRepository;
+    protected SnapshotRepository $snapshotRepository;
 
     protected SnapshotService $snapshotService;
+
+    const BASE_NOTE = 10;
 
     public function __construct(
         SubjectRepository  $subjectRepository,
         ExamRepository     $examRepository,
         StudentRepository  $studentRepository,
         QuestionRepository $questionRepository,
-        SnapshotService    $snapshotService
+        SnapshotService    $snapshotService,
+        SnapshotRepository    $snapshotRepository
     )
     {
         $this->subjectRepository = $subjectRepository;
@@ -33,6 +39,7 @@ class ExamService
         $this->studentRepository = $studentRepository;
         $this->questionRepository = $questionRepository;
         $this->snapshotService = $snapshotService;
+        $this->snapshotRepository = $snapshotRepository;
     }
 
     public function create($studentId, $subjectId, $questionQuantity)
@@ -54,7 +61,11 @@ class ExamService
     public function update($examId, $answers, $finishedAt)
     {
         $exam = $this->examRepository->getById($examId);
+
         $this->validateExamUpdate($exam, $finishedAt);
+
+        $this->registerStudentAnswers($answers, $exam);
+
     }
 
     private function validateExamCreation($request)
@@ -104,5 +115,13 @@ class ExamService
             'questionsAndAnswers' => $snapshot,
             'startedAt' => $exam->getCreatedAt()->format('Y-m-d H:i:s')
         ];
+    }
+
+    public function registerStudentAnswers($answers, Exam $exam): void
+    {
+        foreach ($answers as $question => $answer) {
+            $this->snapshotRepository
+                ->setStudentAnswersByExamAndQuestion($exam, $question, $answer);
+        }
     }
 }
