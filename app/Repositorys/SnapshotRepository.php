@@ -3,6 +3,7 @@
 namespace App\Repositorys;
 
 
+use App\Models\Exam;
 use App\Models\Snapshot;
 use Doctrine\ORM\EntityManager;
 
@@ -26,10 +27,24 @@ class SnapshotRepository
     {
         $queryBuilder = $this->entityManager->createQueryBuilder();
 
-        return  $queryBuilder->select('snapshot')
+        return $queryBuilder->select('snapshot')
             ->from(Snapshot::class, 'snapshot')
             ->where('snapshot.exam = :examSnapshot')
             ->setParameter('examSnapshot', $examId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getCorrectAnswersByExam(Exam $exam)
+    {
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+
+        return $queryBuilder->select('snapshot.question, snapshot.answer')
+            ->from(Snapshot::class, 'snapshot')
+            ->where('snapshot.exam = :exam')
+            ->andWhere('snapshot.isCorrect = true')
+            ->indexBy('snapshot', 'snapshot.question')
+            ->setParameter('exam', $exam)
             ->getQuery()
             ->getResult();
     }
