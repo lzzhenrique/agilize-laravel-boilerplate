@@ -65,4 +65,19 @@ class SnapshotRepository
             ->getQuery()
             ->execute();
     }
+
+
+    public function getScoreByExam(Exam $exam)
+    {
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+
+        return $queryBuilder->select('count(snapshot.id)')
+            ->from(Snapshot::class, 'snapshot')
+            ->where('snapshot.exam = :exam')
+            ->andWhere('snapshot.isCorrect = true')
+            ->andWhere('snapshot.student_answer = snapshot.answer')
+            ->setParameter('exam', $exam)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }
