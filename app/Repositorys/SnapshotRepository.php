@@ -48,4 +48,21 @@ class SnapshotRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function setStudentAnswersByExamAndQuestion(Exam $exam, $question, $studentAnswer)
+    {
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+
+        return $queryBuilder->update(Snapshot::class, 'snapshot')
+            ->set('snapshot.student_answer', ':studentAnswer')
+            ->where('snapshot.exam = :exam')
+            ->andWhere('snapshot.question = :question')
+            ->setParameters([
+                'exam' => $exam,
+                'question' => $question,
+                'studentAnswer' => $studentAnswer
+            ])
+            ->getQuery()
+            ->execute();
+    }
 }
