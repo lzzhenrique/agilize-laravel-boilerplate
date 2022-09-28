@@ -68,6 +68,7 @@ class ExamService
 
         $score = $this->calculateExamResult($exam);
 
+        $this->examRepository->finishExam($exam, $score, $finishedAt);
     }
 
     private function validateExamCreation($request)
