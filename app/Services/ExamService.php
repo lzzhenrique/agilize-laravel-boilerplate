@@ -66,6 +66,8 @@ class ExamService
 
         $this->registerStudentAnswers($answers, $exam);
 
+        $score = $this->calculateExamResult($exam);
+
     }
 
     private function validateExamCreation($request)
@@ -123,5 +125,13 @@ class ExamService
             $this->snapshotRepository
                 ->setStudentAnswersByExamAndQuestion($exam, $question, $answer);
         }
+    }
+
+    private function calculateExamResult(Exam $exam)
+    {
+        $score = $this->snapshotRepository->getScoreByExam($exam);
+        $questionValue = self::BASE_NOTE / $exam->getQuestionQuantity();
+
+        return sprintf("%.2f",$score * $questionValue);
     }
 }
