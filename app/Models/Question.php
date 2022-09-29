@@ -46,13 +46,17 @@ class Question
         return $this->question;
     }
 
-    public function getSubject(): string
+    public function getSubject(): Subject
     {
         return $this->subject;
     }
 
-    public function getAnswers()
+    public function hasCorrectAnswer()
     {
-        return $this->answers;
+        foreach ($this->answers as $answer) {
+            if ($answer->isCorrect()) {
+                return true;
+            }
+        }
     }
 }
