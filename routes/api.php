@@ -27,3 +27,5 @@ Route::post('/question/create', [QuestionController::class, 'store']);
 Route::post('/answer/create', [AnswerController::class, 'store']);
 
 Route::post('/exam/create', [ExamController::class, 'store']);
+
+Route::put('/exam/update/{exam}', [ExamController::class, 'update']);

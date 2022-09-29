@@ -20,6 +20,8 @@ class AnswerController extends Controller
     public function store(Request $request): JsonResponse
     {
         try{
+            
+
             $answer = $this->answerService
                 ->create(
                     $request->get('answer'),

@@ -33,4 +33,19 @@ class ExamController
             ErrorHandler::handleException($e);
         }
     }
+
+    public function update(Request $request, $exam): JsonResponse
+    {
+        try{
+            $examResult = $this->examService->update(
+                $exam,
+                $request->get('answers'),
+                $request->get('finishedAt'),
+            );
+
+            return response()->json($examResult);
+    }catch (\Exception $e){
+            ErrorHandler::handleException($e);
+        }
+    }
 }

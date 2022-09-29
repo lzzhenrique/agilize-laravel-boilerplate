@@ -22,11 +22,28 @@ class ExamRepository
         return $exam;
     }
 
-    public function getById(string $id)
+    public function getById(string $id): Exam
     {
         return $this->entityManager->find(
             Exam::class,
             $id
         );
+    }
+
+    public function finishExam(Exam $exam, $score, $finishedAt)
+    {
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+
+        return  $queryBuilder->update(Exam::class, 'exam')
+            ->set('exam.score', ':score')
+            ->set('exam.finished_at', ':finishedAt')
+            ->where('exam = :exam')
+            ->setParameters([
+                'exam' => $exam,
+                'score' => $score,
+                'finishedAt' => $finishedAt,
+            ])
+            ->getQuery()
+            ->execute();
     }
 }

@@ -17,19 +17,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-//Route::get('/subjects', [SubjectController::class, 'index']);
-//Route::post('/subject/create', [SubjectController::class, 'store']);
-//Route::delete('/subject/remove', [SubjectController::class, 'remove']);
-//
-//Route::get('/students', [StudentController::class, 'index']);
-//Route::post('/student/create', [StudentController::class, 'store']);
-//Route::delete('/student/remove', [StudentController::class, 'remove']);
-//
-//Route::get('/questions', [QuestionController::class, 'index']);
-//Route::post('/question/create', [QuestionController::class, 'store']);
-//Route::delete('/question/remove', [QuestionController::class, 'remove']);
-//
-//Route::get('/answers', [AnswerController::class, 'index']);
-//Route::post('/answer/create', [AnswerController::class, 'store']);
-//Route::delete('/answer/remove', [AnswerController::class, 'remove']);
 
