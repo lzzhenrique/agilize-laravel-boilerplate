@@ -22,7 +22,7 @@ class Snapshot
         $this->exam = $exam;
         $this->question = $question->getQuestion();
         $this->answer = $answer->getAnswer();
-        $this->answerIsCorrect = $answer->getIsCorrect();
+        $this->answerIsCorrect = $answer->isCorrect();
     }
 
     #[Id, Column(type:"guid"), GeneratedValue(strategy: 'UUID')]

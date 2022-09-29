@@ -42,9 +42,9 @@ class Answer
         return $this->answer;
     }
 
-    public function getIsCorrect(): string
+    public function isCorrect(): bool
     {
-        return $this->is_correct;
+        return (bool)$this->is_correct;
     }
 
     public function getQuestionId(): string
