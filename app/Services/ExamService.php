@@ -69,6 +69,13 @@ class ExamService
         $score = $this->calculateExamResult($exam);
 
         $this->examRepository->finishExam($exam, $score, $finishedAt);
+
+        $finalSnapshot = $this->snapshotRepository->getCorrectAnswersByExam($exam);
+
+        return [
+            'score' => $score,
+            'Exam' => $finalSnapshot
+        ];
     }
 
     private function validateExamCreation($request)

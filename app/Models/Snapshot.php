@@ -22,7 +22,7 @@ class Snapshot
         $this->exam = $exam;
         $this->question = $question->getQuestion();
         $this->answer = $answer->getAnswer();
-        $this->isCorrect = $answer->getIsCorrect();
+        $this->answerIsCorrect = $answer->getIsCorrect();
     }
 
     #[Id, Column(type:"guid"), GeneratedValue(strategy: 'UUID')]
@@ -38,7 +38,7 @@ class Snapshot
     private string $answer;
 
     #[Column(type:"boolean")]
-    private bool $isCorrect;
+    private bool $answerIsCorrect;
 
     #[Column(type:"string", nullable: true)]
     protected string $student_answer;

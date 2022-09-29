@@ -23,27 +23,14 @@ class SnapshotRepository
         $this->entityManager->flush();
     }
 
-    public function getByExamId($examId)
-    {
-        $queryBuilder = $this->entityManager->createQueryBuilder();
-
-        return $queryBuilder->select('snapshot')
-            ->from(Snapshot::class, 'snapshot')
-            ->where('snapshot.exam = :examSnapshot')
-            ->setParameter('examSnapshot', $examId)
-            ->getQuery()
-            ->getResult();
-    }
-
     public function getCorrectAnswersByExam(Exam $exam)
     {
         $queryBuilder = $this->entityManager->createQueryBuilder();
 
-        return $queryBuilder->select('snapshot.question, snapshot.answer')
+        return $queryBuilder->select('snapshot.question, snapshot.student_answer, snapshot.answer correctAnswer')
             ->from(Snapshot::class, 'snapshot')
             ->where('snapshot.exam = :exam')
-            ->andWhere('snapshot.isCorrect = true')
-            ->indexBy('snapshot', 'snapshot.question')
+            ->andWhere('snapshot.answerIsCorrect = true')
             ->setParameter('exam', $exam)
             ->getQuery()
             ->getResult();
@@ -74,7 +61,7 @@ class SnapshotRepository
         return $queryBuilder->select('count(snapshot.id)')
             ->from(Snapshot::class, 'snapshot')
             ->where('snapshot.exam = :exam')
-            ->andWhere('snapshot.isCorrect = true')
+            ->andWhere('snapshot.answerIsCorrect = true')
             ->andWhere('snapshot.student_answer = snapshot.answer')
             ->setParameter('exam', $exam)
             ->getQuery()

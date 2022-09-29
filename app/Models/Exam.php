@@ -40,7 +40,7 @@ class Exam
     protected int $question_quantity;
 
     #[Column(type:"datetime", nullable: true)]
-    protected string $finished_at;
+    protected \DateTime $finished_at;
 
     #[OneToMany(mappedBy: "question", targetEntity: Answer::class, cascade: ["persist"], orphanRemoval: true)]
     protected Collection $questions;
