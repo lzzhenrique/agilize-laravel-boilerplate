@@ -36,8 +36,6 @@ class QuestionServiceTest extends TestCase
     public function testCreateFunctionShouldReturnAExceptionIfQuestionIsEmpty()
     {
         $this->expectException(\Exception::class);
-//        $this->expectExceptionMessage('The question is em');
-//        $this->expectExceptionMessage('The question is empty');
 
         $questionRepositoryMock = $this->createMock(QuestionRepository::class);
         $subjectRepositoryMock = $this->createMock(SubjectRepository::class);
@@ -50,7 +48,6 @@ class QuestionServiceTest extends TestCase
     public function testCreateFunctionShouldReturnAExceptionIfQuestionDoenstHaveSubject()
     {
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('This question not have a subject');
 
         $questionMock = $this->createMock(Question::class);
 
