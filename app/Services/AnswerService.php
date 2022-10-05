@@ -21,11 +21,7 @@ class AnswerService
         $this->questionRepository = $questionRepository;
     }
 
-    public function create(
-        $answer,
-        $questionId,
-        $isCorrect
-    ) : Answer
+    public function create($answer, $questionId, $isCorrect) : Answer
     {
 
         $this->validateAnswerRequest(
@@ -47,8 +43,8 @@ class AnswerService
 
     private function validateAnswerRequest($request)
     {
-        foreach ($request as $key => $value) {
-            if (!isset($value)) {
+        foreach ($request as $key) {
+            if (empty($key)) {
                 throw new \Exception("the $key value not can be empty!");
             }
         }
