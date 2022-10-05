@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Service;
 
 use App\Models\Subject;
 use App\Repositorys\SubjectRepository;
@@ -31,11 +31,7 @@ class SubjectServiceTest extends TestCase
         $this->expectException(\Exception::class);
 
         // given
-        $subjectMock = $this->createMock(Subject::class);
-
         $subjectRepositoryMock = $this->createMock(SubjectRepository::class);
-        $subjectRepositoryMock->method('create')->willReturn($subjectMock);
-
         $subjectService = new SubjectService($subjectRepositoryMock);
 
         // when
@@ -47,15 +43,10 @@ class SubjectServiceTest extends TestCase
         $this->expectException(\Exception::class);
 
         // given
-        $subjectMock = $this->createMock(Subject::class);
-
         $subjectRepositoryMock = $this->createMock(SubjectRepository::class);
-        $subjectRepositoryMock->method('create')->willReturn($subjectMock);
-
         $subjectService = new SubjectService($subjectRepositoryMock);
 
         // when
-        $subjectService->create('aa');
+        $subjectService->create('ob');
     }
-
 }
