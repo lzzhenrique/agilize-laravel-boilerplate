@@ -4,7 +4,6 @@ namespace App\Repositorys;
 
 
 use App\Models\Answer;
-use App\Models\Question;
 use Doctrine\ORM\EntityManager;
 
 class AnswerRepository
