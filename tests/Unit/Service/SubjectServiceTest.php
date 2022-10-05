@@ -38,7 +38,7 @@ class SubjectServiceTest extends TestCase
         $subjectService->create(null);
     }
 
-    public function testCreateFunctionShouldReturnAExceptionIfSubjectIsLesserThanThreeCaracters()
+    public function testCreateFunctionShouldReturnAExceptionIfSubjectHasLessThanThreeCaracters()
     {
         $this->expectException(\Exception::class);
 

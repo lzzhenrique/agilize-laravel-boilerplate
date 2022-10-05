@@ -27,7 +27,7 @@ class StudentServiceTest extends TestCase
         $this->assertInstanceOf(Student::class, $result);
     }
 
-    public function testCreateFunctionShouldReturnAExceptionIfSubjectIsEmpty()
+    public function testCreateFunctionShouldReturnAExceptionIfStudentNameIsEmpty()
     {
         $this->expectException(\Exception::class);
 
@@ -40,7 +40,7 @@ class StudentServiceTest extends TestCase
         $studentService->create(null);
     }
 
-    public function testCreateFunctionShouldReturnAExceptionIfSubjectIsLesserThanThreeCaracters()
+    public function testCreateFunctionShouldReturnAExceptionIfStudentNameHasLessThanThreeCaracters()
     {
         $this->expectException(\Exception::class);
 
