@@ -36,7 +36,7 @@ class QuestionService
         }
 
         if ($this->subjectRepository->getById($subjectId) === null) {
-            throw new \Exception('The question not have a subject');
+            throw new \Exception('This question not have a subject');
         }
     }
 }
