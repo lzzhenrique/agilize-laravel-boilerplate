@@ -24,13 +24,13 @@ class SubjectService
         return $this->subjectRepository->create(new Subject($subjectName));
     }
 
-    private function validateSubjectRequest($subject)
+    private function validateSubjectRequest($subjectName)
     {
-        if (empty($subject)) {
+        if (empty($subjectName)) {
             throw new \Exception('The subject is empty');
         }
 
-        if (strlen($subject) < 3) {
+        if (strlen($subjectName) < 3) {
             throw new \Exception('The subject name is too short');
         }
     }
