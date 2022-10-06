@@ -22,7 +22,7 @@ class SubjectRepository
         return $subject;
     }
 
-    public function getById(string $id)
+    public function getById(string $id): Subject
     {
         return $this->entityManager->find(
             Subject::class,
