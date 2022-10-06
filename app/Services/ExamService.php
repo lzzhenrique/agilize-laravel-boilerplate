@@ -51,7 +51,7 @@ class ExamService
         );
 
         $exam = $this->createExam($studentId, $subjectId, $questionQuantity);
-        $snapshot = $this->createExamSnapshot($exam);
+        $snapshot = $this->snapshotService->create($exam);
 
         return $this->createExamResponse($exam, $snapshot);
     }
@@ -107,11 +107,6 @@ class ExamService
                 $questionQuantity
             )
         );
-    }
-
-    private function createExamSnapshot(Exam $exam)
-    {
-        return $this->snapshotService->create($exam);
     }
 
     private function createExamResponse(Exam $exam, $snapshot)
