@@ -8,7 +8,7 @@ use App\Repositorys\StudentRepository;
 use App\Services\StudentService;
 use PHPUnit\Framework\TestCase;
 
-class StudentServiceTest extends TestCase
+class CreateStudentServiceTest extends TestCase
 {
     public function testCreateFunctionShouldReturnAStudent()
     {

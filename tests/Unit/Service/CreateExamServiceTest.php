@@ -17,7 +17,7 @@ use App\Services\ExamService;
 use App\Services\SnapshotService;
 use Tests\TestCase;
 
-class ExamServiceTest extends TestCase
+class CreateExamServiceTest extends TestCase
 {
     public function testCreateFunctionShouldReturnAArrayWithExamKeys()
     {
@@ -104,7 +104,6 @@ class ExamServiceTest extends TestCase
             0
         );
     }
-
 
     private function getExamService()
     {

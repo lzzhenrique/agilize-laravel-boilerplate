@@ -7,7 +7,7 @@ use App\Repositorys\SubjectRepository;
 use App\Services\SubjectService;
 use PHPUnit\Framework\TestCase;
 
-class SubjectServiceTest extends TestCase
+class CreateSubjectServiceTest extends TestCase
 {
     public function testCreateFunctionShouldReturnASubject()
     {

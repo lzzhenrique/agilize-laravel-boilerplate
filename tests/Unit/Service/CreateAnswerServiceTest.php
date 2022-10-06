@@ -11,7 +11,7 @@ use App\Services\AnswerService;
 use PHPUnit\Framework\TestCase;
 
 
-class AnswerServiceTest extends TestCase
+class CreateAnswerServiceTest extends TestCase
 {
     public function testCreateFunctionShouldReturnAAnswer()
     {

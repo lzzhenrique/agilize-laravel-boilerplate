@@ -10,7 +10,7 @@ use App\Repositorys\SubjectRepository;
 use App\Services\QuestionService;
 use Tests\TestCase;
 
-class QuestionServiceTest extends TestCase
+class CreateQuestionServiceTest extends TestCase
 {
     public function testCreateFunctionShouldReturnAQuestion()
     {
