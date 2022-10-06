@@ -17,7 +17,7 @@ class SnapshotRepository
         $this->entityManager = $entityManager;
     }
 
-    public function create(Snapshot $snapshot)
+    public function create(Snapshot $snapshot): Snapshot
     {
         $this->entityManager->persist($snapshot);
         $this->entityManager->flush();
