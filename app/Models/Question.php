@@ -51,6 +51,11 @@ class Question
         return $this->subject;
     }
 
+    public function getAnswers()
+    {
+        return $this->answers;
+    }
+
     public function hasCorrectAnswer()
     {
         foreach ($this->answers as $answer) {
