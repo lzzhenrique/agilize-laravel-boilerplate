@@ -4,8 +4,6 @@ namespace App\Services;
 
 
 use App\Models\Exam;
-use App\Models\Question;
-use App\Models\Snapshot;
 use App\Repositorys\ExamRepository;
 use App\Repositorys\QuestionRepository;
 use App\Repositorys\SnapshotRepository;
@@ -80,8 +78,8 @@ class ExamService
 
     private function validateExamCreation($request)
     {
-        foreach ($request as $key => $value) {
-            if (!isset($value)) {
+        foreach ($request as $key) {
+            if (empty($key)) {
                 throw new \Exception("the $key value not can be empty!");
             }
         }
