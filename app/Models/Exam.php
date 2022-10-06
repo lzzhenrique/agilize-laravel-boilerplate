@@ -74,4 +74,9 @@ class Exam
     {
         return $this->question_quantity;
     }
+
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
 }
