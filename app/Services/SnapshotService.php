@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 use App\Models\Exam;
+use App\Models\Question;
 use App\Models\Snapshot;
 use App\Repositorys\AnswerRepository;
 use App\Repositorys\SnapshotRepository;
@@ -32,18 +33,18 @@ class SnapshotService
             $exam->getQuestionQuantity()
         );
 
+        $questionsAndAnswers = [];
+
+        /**
+         * @var Question $question
+         */
         foreach ($questions as $question) {
             foreach ($question->getAnswers() as $answer) {
                 $snapshot = new Snapshot($exam, $question, $answer);
 
                 $this->snapshotRepository->create($snapshot);
             }
-        }
 
-        $questionsAndAnswers = [];
-
-        /** @var Question $question */
-        foreach ($questions as $question) {
             $questionsAndAnswers[$question->getQuestion()] = array_map(function ($answer) {
                 return $answer->getAnswer();
             }, $question->getAnswers()->toArray());

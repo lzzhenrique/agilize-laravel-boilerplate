@@ -21,6 +21,8 @@ class SnapshotRepository
     {
         $this->entityManager->persist($snapshot);
         $this->entityManager->flush();
+
+        return $snapshot;
     }
 
     public function getCorrectAnswersByExam(Exam $exam)

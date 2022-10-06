@@ -3,7 +3,9 @@
 namespace Tests\Unit\Service;
 
 
-class SnapshotServiceTest
+use Tests\TestCase;
+
+class SnapshotServiceTest extends TestCase
 {
 
 }
