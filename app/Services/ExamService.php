@@ -56,26 +56,6 @@ class ExamService
         return $this->createExamResponse($exam, $snapshot);
     }
 
-    public function update($examId, $answers, $finishedAt)
-    {
-        $exam = $this->examRepository->getById($examId);
-
-        $this->validateExamUpdate($exam, $finishedAt);
-
-        $this->registerStudentAnswers($answers, $exam);
-
-        $score = $this->calculateExamResult($exam);
-
-        $this->examRepository->finishExam($exam, $score, $finishedAt);
-
-        $finalSnapshot = $this->snapshotRepository->getCorrectAnswersByExam($exam);
-
-        return [
-            'score' => $score,
-            'Exam' => $finalSnapshot
-        ];
-    }
-
     private function validateExamCreation($request)
     {
         foreach ($request as $key) {
@@ -86,15 +66,6 @@ class ExamService
 
         if ($this->questionRepository->countQuestionsBySubject($request['subjectId']) < $request['questionQuantity']) {
             throw new \Exception("the quantity of questions is less than the requested quantity");
-        }
-    }
-
-    private function validateExamUpdate(Exam $exam, $finishedAt)
-    {
-        $finishedAtToCarbon = Carbon::parse($finishedAt);
-
-        if ($finishedAtToCarbon->diffInHours($exam->getCreatedAt()->format('Y-m-d H:i:s')) > 1) {
-            throw new \Exception("the exam has expired");
         }
     }
 
@@ -118,6 +89,35 @@ class ExamService
             'questionsAndAnswers' => $snapshot,
             'startedAt' => $exam->getCreatedAt()->format('Y-m-d H:i:s')
         ];
+    }
+
+    public function update($examId, $answers, $finishedAt)
+    {
+        $exam = $this->examRepository->getById($examId);
+
+        $this->validateExamUpdate($exam, $finishedAt);
+
+        $this->registerStudentAnswers($answers, $exam);
+
+        $score = $this->calculateExamResult($exam);
+
+        $this->examRepository->finishExam($exam, $score, $finishedAt);
+
+        $finalSnapshot = $this->snapshotRepository->getCorrectAnswersByExam($exam);
+
+        return [
+            'score' => $exam->getScore(),
+            'Exam' => $finalSnapshot
+        ];
+    }
+
+    private function validateExamUpdate(Exam $exam, $finishedAt)
+    {
+        $finishedAtToCarbon = Carbon::parse($finishedAt);
+
+        if ($finishedAtToCarbon->diffInHours($exam->getCreatedAt()->format('Y-m-d H:i:s')) > 1) {
+            throw new \Exception("the exam has expired");
+        }
     }
 
     public function registerStudentAnswers($answers, Exam $exam): void

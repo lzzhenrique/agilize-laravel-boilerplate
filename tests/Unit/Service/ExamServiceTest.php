@@ -6,6 +6,7 @@ namespace Tests\Unit\Service;
 use App\Models\Exam;
 use App\Models\Question;
 use App\Models\Snapshot;
+use App\Models\Subject;
 use App\Repositorys\AnswerRepository;
 use App\Repositorys\ExamRepository;
 use App\Repositorys\QuestionRepository;
@@ -18,18 +19,22 @@ use Tests\TestCase;
 
 class ExamServiceTest extends TestCase
 {
-    public function testCreateFunctionShouldReturnAExam()
+    public function testCreateFunctionShouldReturnAArrayWithExamKeys()
     {
         // given
         $questionMock = $this->createMock(Question::class);
         $snapshotMock = $this->createMock(Snapshot::class);
+        $subjectMock = $this->createMock(Subject::class);
+
 
 
         $subjectRepositoryMock = $this->createMock(SubjectRepository::class);
+        $subjectRepositoryMock->method('getById')->willReturn($subjectMock);
+
         $examRepositoryMock = $this->createMock(ExamRepository::class);
 
         $snapshotServiceMock = $this->createMock(SnapshotService::class);
-        $snapshotServiceMock->method('create')->willReturn([$snapshotMock, $snapshotMock, $snapshotMock, $snapshotMock]);
+        $snapshotServiceMock->method('create')->willReturn([$snapshotMock, $snapshotMock, $snapshotMock]);
 
         $snapshotRepositoryMock = $this->createMock(SnapshotRepository::class);
 
@@ -56,6 +61,11 @@ class ExamServiceTest extends TestCase
         );
 
         // then
-        $this->assertInstanceOf(Exam::class, $result);
+        $this->assertIsArray($result);
+        $this->assertArrayHasKey('exam', $result);
+        $this->assertArrayHasKey('student', $result);
+        $this->assertArrayHasKey('subject', $result);
+        $this->assertArrayHasKey('questionsAndAnswers', $result);
+        $this->assertArrayHasKey('startedAt', $result);
     }
 }
