@@ -64,8 +64,12 @@ class ExamService
             }
         }
 
+        if ($request['questionQuantity'] <= 0) {
+            throw new \Exception("The requested quantity shouldnt be lesser or equal a zero");
+        }
+
         if ($this->questionRepository->countQuestionsBySubject($request['subjectId']) < $request['questionQuantity']) {
-            throw new \Exception("the quantity of questions is less than the requested quantity");
+            throw new \Exception("the total amount of questions is lesser than the requested quantity");
         }
     }
 
