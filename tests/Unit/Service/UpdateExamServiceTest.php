@@ -37,6 +37,20 @@ class UpdateExamServiceTest extends TestCase
         $this->assertArrayHasKey('score', $result);
     }
 
+    public function testUpdateFunctionShouldReturnAExceptionWhenDifferenceBetweenCreatedAtAndFinishedAtIsSuperiorThanOneHour()
+    {
+        $this->expectException(\Exception::class);
+
+        $examService = $this->getExamService();
+
+        // when
+         $examService->update(
+            '05b6127c-bc7f-4d53-8e08-221e9cf593e7',
+            $this->getStudentAnswers(),
+            new \DateTime('2022-10-10 18:00:00'),
+        );
+    }
+
     private function getExamService()
     {
         $snapshotMock = $this->createMock(Snapshot::class);

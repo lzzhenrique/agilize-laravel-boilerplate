@@ -103,9 +103,7 @@ class ExamService
 
         $this->registerStudentAnswers($studentAnswers, $exam);
 
-
         $score = $this->calculateExamResult($exam);
-        dd('OIEE');
 
         $this->examRepository->finishExam($exam, $score, $finishedAt);
 
