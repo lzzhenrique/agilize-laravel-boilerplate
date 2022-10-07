@@ -95,15 +95,17 @@ class ExamService
         ];
     }
 
-    public function update($examId, $answers, $finishedAt)
+    public function update($examId, $studentAnswers, $finishedAt)
     {
         $exam = $this->examRepository->getById($examId);
 
         $this->validateExamUpdate($exam, $finishedAt);
 
-        $this->registerStudentAnswers($answers, $exam);
+        $this->registerStudentAnswers($studentAnswers, $exam);
+
 
         $score = $this->calculateExamResult($exam);
+        dd('OIEE');
 
         $this->examRepository->finishExam($exam, $score, $finishedAt);
 
@@ -135,6 +137,11 @@ class ExamService
     private function calculateExamResult(Exam $exam)
     {
         $score = $this->snapshotRepository->getScoreByExam($exam);
+
+        if ($score < 0 || $score === null){
+            $score = 0;
+        }
+
         $questionValue = self::BASE_NOTE / $exam->getQuestionQuantity();
 
         return sprintf("%.2f",$score * $questionValue);
