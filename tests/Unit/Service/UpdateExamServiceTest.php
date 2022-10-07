@@ -17,113 +17,46 @@ use App\Services\ExamService;
 use App\Services\SnapshotService;
 use Tests\TestCase;
 
-class CreateExamServiceTest extends TestCase
+class UpdateExamServiceTest extends TestCase
 {
-    public function testCreateFunctionShouldReturnAArrayWithExamKeys()
+    public function testUpdateFunctionShouldReturnAArrayWithResultKeys()
     {
         // given
         $examService = $this->getExamService();
 
         // when
-        $result = $examService->create(
+        $result = $examService->update(
             '05b6127c-bc7f-4d53-8e08-221e9cf593e7',
-            'e913e8f0-bff2-4ec1-b15a-80568e430147',
-            9
+            $this->getStudentAnswers(),
+            new \DateTime('2022-10-10 16:00:00'),
         );
 
         // then
         $this->assertIsArray($result);
-        $this->assertArrayHasKey('exam', $result);
-        $this->assertArrayHasKey('student', $result);
-        $this->assertArrayHasKey('subject', $result);
-        $this->assertArrayHasKey('questionsAndAnswers', $result);
-        $this->assertArrayHasKey('startedAt', $result);
-    }
-
-    public function testCreateFunctionShouldReturnAExceptionWhenQuestionQuantityIsGreatherThanStoredQuestions()
-    {
-        $this->expectException(\Exception::class);
-
-        $examService = $this->getExamService();
-
-        $examService->create(
-            '05b6127c-bc7f-4d53-8e08-221e9cf593e7',
-            'e913e8f0-bff2-4ec1-b15a-80568e430147',
-            200000
-        );
-    }
-
-    public function testCreateFunctionShouldReturnAExceptionWhenStudentIdIsEmpty()
-    {
-        $this->expectException(\Exception::class);
-
-        $examService = $this->getExamService();
-
-        $examService->create(
-            '',
-            'e913e8f0-bff2-4ec1-b15a-80568e430147',
-            200000
-        );
-    }
-
-    public function testCreateFunctionShouldReturnAExceptionWhenSubjectIdIsEmpty()
-    {
-        $this->expectException(\Exception::class);
-
-        $examService = $this->getExamService();
-
-        $examService->create(
-            'e913e8f0-bff2-4ec1-b15a-80568e430147',
-            '',
-            200000
-        );
-    }
-
-    public function testCreateFunctionShouldReturnAExceptionWhenQuestionQuantityIsEmpty()
-    {
-        $this->expectException(\Exception::class);
-
-        $examService = $this->getExamService();
-
-        $examService->create(
-            'e913e8f0-bff2-4ec1-b15a-80568e430147',
-            'e913e8f0-bff2-4ec1-b15a-80568e430141',
-            ''
-        );
-    }
-
-    public function testCreateFunctionShouldReturnAExceptionWhenQuestionQuantityIsLesserOrEqualAZero()
-    {
-        $this->expectException(\Exception::class);
-
-        $examService = $this->getExamService();
-
-        $examService->create(
-            'e913e8f0-bff2-4ec1-b15a-80568e430147',
-            'e913e8f0-bff2-4ec1-b15a-80568e430141',
-            0
-        );
+        $this->assertArrayHasKey('Exam', $result);
+        $this->assertArrayHasKey('score', $result);
     }
 
     private function getExamService()
     {
-        $questionMock = $this->createMock(Question::class);
         $snapshotMock = $this->createMock(Snapshot::class);
-        $subjectMock = $this->createMock(Subject::class);
+
+        $examMock = $this->createMock(Exam::class);
+        $examMock->method('getCreatedAt')->willReturn(new \DateTime('2022-10-10 15:30:00'));
+        $examMock->method('getQuestionQuantity')->willReturn(3);
 
         $subjectRepositoryMock = $this->createMock(SubjectRepository::class);
-        $subjectRepositoryMock->method('getById')->willReturn($subjectMock);
 
         $examRepositoryMock = $this->createMock(ExamRepository::class);
+        $examRepositoryMock->method('getById')->willReturn($examMock);
 
         $snapshotServiceMock = $this->createMock(SnapshotService::class);
-        $snapshotServiceMock->method('create')->willReturn([$snapshotMock, $snapshotMock, $snapshotMock]);
 
         $snapshotRepositoryMock = $this->createMock(SnapshotRepository::class);
+        $snapshotRepositoryMock->method('getScoreByExam')->willReturn(2);
+        $snapshotRepositoryMock->method('getCorrectAnswersByExam')->willReturn($this->getCorrectAnswers());
 
         $questionRepositoryMock = $this->createMock(QuestionRepository::class);
-        $questionRepositoryMock->method('countQuestionsBySubject')->willReturn(10);
-
         $studentRepositoryMock = $this->createMock(StudentRepository::class);
 
 
@@ -135,5 +68,35 @@ class CreateExamServiceTest extends TestCase
             $snapshotServiceMock,
             $snapshotRepositoryMock
         );
+    }
+
+    private function getStudentAnswers()
+    {
+        return[
+            "quantos cantos um campo de futebol tem" => "true",
+		    "Quantas cores a bandeira do SP tem?" => "três",
+            "marca de chuteira" => "nike"
+        ];
+    }
+
+    private function getCorrectAnswers()
+    {
+        return [
+            [
+                "question" => "quantos cantos um campo de futebol tem",
+			    "student_answer" => "true",
+			    "correctAnswer" => "quatro"
+		    ],
+		    [
+                "question" => "Quantas cores a bandeira do SP tem?",
+			    "student_answer" => "três",
+			    "correctAnswer" => "três"
+		   ],
+            [
+                "question" => "marca de chuteira",
+    			"student_answer" => "nike",
+	    		"correctAnswer" => "nike"
+            ],
+        ];
     }
 }
