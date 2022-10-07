@@ -57,7 +57,6 @@ class SnapshotService
     {
         $allQuestions = $this->questionRepository->getAllQuestionsBySubject($subject);
 
-
         shuffle($allQuestions);
 
         return array_slice($allQuestions, 0, $questionsQuantity);

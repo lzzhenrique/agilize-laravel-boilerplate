@@ -3,11 +3,9 @@
 namespace Tests\Unit\Service;
 
 
-use App\Models\Exam;
 use App\Models\Question;
 use App\Models\Snapshot;
 use App\Models\Subject;
-use App\Repositorys\AnswerRepository;
 use App\Repositorys\ExamRepository;
 use App\Repositorys\QuestionRepository;
 use App\Repositorys\SnapshotRepository;
