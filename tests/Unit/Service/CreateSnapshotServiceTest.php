@@ -20,9 +20,7 @@ class CreateSnapshotServiceTest extends TestCase
     {
         // given
         $snapshotService = $this->getSnapshotService();
-
         $examMock = $this->getExamMock();
-
 
         // when
         $result = $snapshotService->create($examMock);
@@ -33,8 +31,6 @@ class CreateSnapshotServiceTest extends TestCase
 
     private function getSnapshotService()
     {
-//        $snapshotMock = $this->createMock(Snapshot::class);
-
         $snapshotRepositoryMock = $this->createMock(SnapshotRepository::class);
 
         $answerRepositoryMock = $this->createMock(AnswerRepository::class);
