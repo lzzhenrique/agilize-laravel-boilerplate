@@ -53,12 +53,11 @@ class SnapshotService
         return $questionsAndAnswers;
     }
 
-    private function pickRandomQuestionsBySubject($subject, $questionsQuantity): array
+    public function pickRandomQuestionsBySubject($subject, $questionsQuantity): array
     {
         $allQuestions = $this->questionRepository->getAllQuestionsBySubject($subject);
 
         shuffle($allQuestions);
-
         return array_slice($allQuestions, 0, $questionsQuantity);
     }
 }
