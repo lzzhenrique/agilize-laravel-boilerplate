@@ -28,7 +28,7 @@ class SubjectController extends Controller
                 );
 
             return response()->json([
-                'message' => 'The subject ' .  $subject->getSubject() . ' are created successfully'
+                'message' => 'The subject ' .  $subject->getSubjectName() . ' are created successfully'
             ]);
         } catch (\Exception $e) {
             ErrorHandler::handleException($e);
