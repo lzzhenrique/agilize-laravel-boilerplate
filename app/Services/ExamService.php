@@ -140,6 +140,6 @@ class ExamService
         $score = $this->snapshotRepository->getScoreByExam($exam);
         $questionValue = self::BASE_NOTE / $exam->getQuestionQuantity();
 
-        return sprintf("%.2f",$score * $questionValue);
+        return round($score * $questionValue, 2);
     }
 }

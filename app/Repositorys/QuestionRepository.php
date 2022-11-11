@@ -33,7 +33,7 @@ class QuestionRepository
         );
     }
 
-    public function getAllQuestionsBySubject($subjectId)
+    public function getAllQuestionsBySubject(string $subjectId)
     {
         $queryBuilder = $this->entityManager->createQueryBuilder();
 
@@ -45,19 +45,9 @@ class QuestionRepository
             ->getResult();
     }
 
-    public function countQuestionsBySubject($subjectId)
+    public function countQuestionsBySubject(string $subjectId)
     {
         return $this->entityManager->getRepository(Question::class)->count(['subject' => $subjectId]);
     }
 }
 
-//
-//$queryBuilder = $this->entityManager->createQueryBuilder();
-//
-//return $queryBuilder->select('question')
-//    ->from(Question::class, 'question')
-//    ->join(Answer::class, 'answer', 'WITH', 'question.id = answer.question')
-//    ->where('question.subject = :subject')
-//    ->setParameter('subject', $subjectId)
-//    ->getQuery()
-//    ->getArrayResult();
