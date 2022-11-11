@@ -27,11 +27,11 @@ class SubjectService
     private function validateSubjectRequest($subject)
     {
         if (empty($subject)) {
-            throw new \Exception('The subject is empty');
+            throw new \Exception('The subject is empty 6520941995');
         }
 
         if (strlen($subject) < 3) {
-            throw new \Exception('The subject name is too short');
+            throw new \Exception('The subject name is too short 2691264833');
         }
     }
 }

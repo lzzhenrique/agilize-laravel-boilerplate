@@ -9,7 +9,7 @@ class ErrorHandler
     {
         var_dump('HANDLE EXCEPTION');
         throw new \Exception(
-            $e->getMessage() . ' in ' .  $e->getFile() . '  ' . $e->getLine()
+                $e->getMessage() . ' in ' .  $e->getFile() . '  ' . $e->getLine() . '8122038849' 
             );
     }
 }

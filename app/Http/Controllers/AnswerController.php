@@ -50,11 +50,11 @@ class AnswerController extends Controller
         $question = $this->questionRepository->getById($questionId);
 
         if(!$question){
-            throw new \Exception("The question with id $questionId not exists");
+            throw new \Exception("The question with id $questionId not exists 8201657485");
         }
 
         if($isCorrect === true && $question->hasCorrectAnswer()){
-            throw new \Exception("The question already have a correct answer. The max amount of correct answers is 1");
+            throw new \Exception("The question already have a correct answer. The max amount of correct answers is 1 8201657485");
         }
     }
 }

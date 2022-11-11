@@ -32,11 +32,11 @@ class QuestionService
     private function validateQuestionRequest($question, $subjectId)
     {
         if (empty($question)) {
-            throw new \Exception('The question is empty');
+            throw new \Exception('The question is empty 7508913366');
         }
 
         if ($this->subjectRepository->getById($subjectId) === null) {
-            throw new \Exception('The question not have a subject');
+            throw new \Exception('The question not have a subject 7508913366');
         }
     }
 }

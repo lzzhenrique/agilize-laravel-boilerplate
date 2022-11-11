@@ -49,16 +49,16 @@ class AnswerService
     {
         foreach ($request as $key => $value) {
             if (!isset($value)) {
-                throw new \Exception("the $key value not can be empty!");
+                throw new \Exception("the $key value not can be empty! 1307497968");
             }
         }
 
         if ($this->questionRepository->getById($request['questionId']) === null) {
-            throw new \Exception('The answer not have a question');
+            throw new \Exception('The answer not have a question 5976306300');
         }
 
         if (!is_bool($request['isCorrect'])) {
-            throw new \Exception('The isCorrect value not is a boolean');
+            throw new \Exception('The isCorrect value not is a boolean 5976306300');
         }
     }
 }
