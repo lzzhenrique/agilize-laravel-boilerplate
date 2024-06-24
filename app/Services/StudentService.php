@@ -26,7 +26,7 @@ class StudentService
     private function validateStudentName($name)
     {
         if(!$name || strlen($name) < 3) {
-            throw new \Exception('The student has to be a valid name');
+            throw new \Exception('The student has to be a valid name 2230650682');
         }
     }
 }

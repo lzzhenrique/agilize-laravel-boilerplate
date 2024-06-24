@@ -23,7 +23,7 @@ class StudentRepository
         return $student;
     }
 
-    public function getById($id): Student
+    public function getById(string $id): Student
     {
         return $this->entityManager->find(Student::class, $id);
     }

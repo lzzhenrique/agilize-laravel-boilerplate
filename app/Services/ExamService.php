@@ -82,12 +82,12 @@ class ExamService
     {
         foreach ($request as $key => $value) {
             if (!isset($value)) {
-                throw new \Exception("the $key value not can be empty!");
+                throw new \Exception("the $key value not can be empty! 3085938487");
             }
         }
 
         if ($this->questionRepository->countQuestionsBySubject($request['subjectId']) < $request['questionQuantity']) {
-            throw new \Exception("the quantity of questions is less than the requested quantity");
+            throw new \Exception("the quantity of questions is less than the requested quantity 7685540840");
         }
     }
 
@@ -96,7 +96,7 @@ class ExamService
         $finishedAtToCarbon = Carbon::parse($finishedAt);
 
         if ($finishedAtToCarbon->diffInHours($exam->getCreatedAt()->format('Y-m-d H:i:s')) > 1) {
-            throw new \Exception("the exam has expired");
+            throw new \Exception("the exam has expired 1637810626");
         }
     }
 
@@ -140,6 +140,6 @@ class ExamService
         $score = $this->snapshotRepository->getScoreByExam($exam);
         $questionValue = self::BASE_NOTE / $exam->getQuestionQuantity();
 
-        return sprintf("%.2f",$score * $questionValue);
+        return round($score * $questionValue, 2);
     }
 }
